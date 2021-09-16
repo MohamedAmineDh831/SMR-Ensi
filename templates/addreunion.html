@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% from "macros.html" import  render_field %}
+{% block content %}
+          <div class="content">
+        <div class="row">
+ <!-------------------------------------------------------------------------------------------------------------!>
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="title">Edit Profile</h5>
+              </div>
+              <div class="card-body">
+                <form method="POST" action="{{ url_for('addreunion') }}">
+                    {{ form.csrf_token }}
+                  <div class="row">
+                    <div class="col-md-5 pr-md-1">
+                        {{ render_field(form.nom, placeholder = form.nom.label.text) }}
+
+                    </div>
+                    <div class="col-md-3 px-md-1">
+                      {{ render_field(form.heure, placeholder = form.heure.label.text) }}
+                    </div>
+                    <div class="col-md-4 pl-md-1">
+                      {{ render_field(form.date, placeholder = form.date.label.text) }}
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6 pr-md-1">
+                    {{ render_field(form.Duree, placeholder = form.Duree.label.text) }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      {{ render_field(form.address, placeholder = form.address.label.text) }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 pr-md-1">
+                      {{ render_field(form.city, placeholder = form.city.label.text) }}
+                    </div>
+                    <div class="col-md-4 px-md-1">
+                      {{ render_field(form.nom_formateur, placeholder = form.nom_formateur.label.text) }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                      {{ render_field(form.description, placeholder = form.description.label.text) }}
+                    </div>
+                  </div>
+
+                  </div>
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-fill btn-primary" >Next</button>
+                  </div>
+                </form>
+            </div>
+          </div>
+   <!---------------------------------------------------------------------------------------------------------------!>
+  <!-----------------------------------------------------------------------------------------------------------------!>
+          <div class="col-md-4">
+            <div class="card card-user">
+              <div class="card-body">
+                <p class="card-text">
+                  <div class="author">
+                    <div class="block block-one"></div>
+                    <div class="block block-two"></div>
+                    <div class="block block-three"></div>
+                    <div class="block block-four"></div>
+                    <a href="javascript:void(0)">
+                      <img class="avatar" src="../static/img/emilyz.jpg" alt="...">
+                      <h5 class="title">Mike Andrew</h5>
+                    </a>
+                    <p class="description">
+                      Ceo/Co-Founder
+                    </p>
+                  </div>
+                </p>
+                <div class="card-description">
+                  Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="button-container">
+                  <button href="javascript:void(0)" class="btn btn-icon btn-round btn-facebook">
+                    <i class="fab fa-facebook"></i>
+                  </button>
+                  <button href="javascript:void(0)" class="btn btn-icon btn-round btn-twitter">
+                    <i class="fab fa-twitter"></i>
+                  </button>
+                  <button href="javascript:void(0)" class="btn btn-icon btn-round btn-google">
+                    <i class="fab fa-google-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+  <!-----------------------------------------------------------------------------------------------!>
+        </div>
+  <!--""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""--!>
+      </div>
+{% endblock %}

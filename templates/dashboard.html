@@ -1,0 +1,437 @@
+{% from "macros.html" import nav_link with context %}
+{% from "macros.html" import notif with context %}
+{% from "macros.html" import profil with context %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link href="../static/css/nucleo-icons.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link href="../static/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+    <link href="../static/demo/demo.css" rel="stylesheet" />
+    <style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+</style>
+    <script type="text/javascript" src="moment.js"></script>
+
+<script type="text/javascript" src="Chart.js"></script>
+
+<script type="text/javascript" src="chartjs-plugin-streaming.js"></script>
+
+        <script src=https://www.gstatic.com/firebasejs/4.11.0/firebase-app.js></script>
+    <script src=https://www.gstatic.com/firebasejs/4.11.0/firebase-auth.js></script>
+    <script src=https://www.gstatic.com/firebasejs/4.11.0/firebase-database.js></script>
+    <script src=https://www.gstatic.com/firebasejs/4.11.0/firebase-firestore.js></script>
+    <script src=https://www.gstatic.com/firebasejs/4.11.0/firebase-storage.js></script>
+    <script src=https://www.gstatic.com/firebasejs/4.11.0/firebase-messaging.js></script>
+	<script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.8.0"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+ <div class="wrapper">
+  <!--#############################################################################################################--!>
+    <div class="sidebar">
+      <!--
+        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+    -->
+      <div class="sidebar-wrapper">
+        <div class="logo">
+          <a href="javascript:void(0)" class="simple-text logo-mini">
+            CT
+          </a>
+          <a href="{{ url_for('Home')}}" class="simple-text logo-normal">
+            Home
+          </a>
+        </div>
+
+        <ul class="nav">
+
+            {{ nav_link('room' ,'Room', 'tim-icons icon-atom', false) }}
+            {{ nav_link('notification', 'Notifications', 'tim-icons icon-bell-55', false) }}
+            {{ nav_link('user_register', 'User Profile', 'tim-icons icon-single-02', true) }}
+            {{ nav_link('upgrade', 'tim-icons icon-spaceship', false) }}
+
+
+        </ul>
+      </div>
+    </div>
+  <!--############################################################################################################################
+  """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""--!>
+    <div class="main-panel">
+      <!-- Navbar -->
+     <!--<<<<<<<<<<<<<<<<<<<<<<<-------------------------------------------------------------------------------------------------------------!>
+      <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-toggle d-inline">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
+            <a class="navbar-brand" href="javascript:void(0)">User Profile</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navigation">
+            <ul class="navbar-nav ml-auto">
+                <!------------------------------------------------------------------------!>
+              <li class="search-bar input-group">
+                <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal"><i class="tim-icons icon-zoom-split" ></i>
+                  <span class="d-lg-none d-md-block">Search</span>
+                </button>
+              </li>
+                <!------------------------------------------------------------------------!>
+                <!-----------------------------------------------------------------------------------!>
+              <li class="dropdown nav-item">
+                <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                  <div class="notification d-none d-lg-block d-xl-block"></div>
+                  <i class="tim-icons icon-sound-wave"></i>
+                  <p class="d-lg-none">
+                    Notifications
+                  </p>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
+                    {{ notif('notification', 'Mike John responded to your email') }}
+                    {{ notif('notification', 'You have 5 more tasks') }}
+                    {{ notif('notification', 'Your friend Michael is in town') }}
+                    {{ notif('notification', 'Another notification') }}
+                    {{ notif('notification', 'Another one') }}
+                </ul>
+              </li>
+                <!--------------------------------------------------------------------------------------!>
+                <!-------------------------------------------------------------------------------------!>
+              <li class="dropdown nav-item">
+                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                  <div class="photo">
+                    <img src="../static/img/anime3.png" alt="Profile Photo">
+                  </div>
+                  <b class="caret d-none d-lg-block d-xl-block"></b>
+                  <p class="d-lg-none">
+                    Log out
+                  </p>
+                </a>
+                <ul class="dropdown-menu dropdown-navbar">
+                    {{ profil('dashboard', 'Profile') }}
+                    {{ profil('dashboard', 'Settings') }}
+                  <li class="dropdown-divider"></li>
+                    {{ profil('dashboard', 'Log out') }}
+                </ul>
+              </li>
+                <!-------------------------------------------------------------------------------------------!>
+              <li class="separator d-lg-none"></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+        <!---------------------------------------------------------------------------------------------------  --!>
+        <!----------------------------------------------------!>
+      <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i class="tim-icons icon-simple-remove"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+        <!--------------------------------------------------------------------------------------------------------!>
+      <!-- End Navbar -->
+<div class="container">
+<div class="row">
+
+          <div class="col-sm">
+            <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+
+              <div class="card-header">Temperature</div>
+
+                    <div class="card card-chart">
+                          <div class="card-body">
+                            <div class="chart-area">
+                             <canvas id="selmi1"></canvas>
+                            </div>
+                          </div>
+                    </div>
+            </div>
+            </div>
+            <div class="col-sm">
+            <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+
+              <div class="card-header">Humidity</div>
+
+                    <div class="card card-chart">
+                          <div class="card-body">
+                            <div class="chart-area">
+                             <canvas id="selmi2"></canvas>
+                            </div>
+                          </div>
+                    </div>
+            </div>
+            </div>
+            <div class="col-sm">
+            <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+
+              <div class="card-header">Luminosity</div>
+
+                    <div class="card card-chart">
+                          <div class="card-body">
+                            <div class="chart-area">
+                             <canvas id="selmi3"></canvas>
+                            </div>
+                          </div>
+                    </div>
+            </div>
+            </div>
+
+
+</div>
+</div>
+
+<script>
+    var config = {
+       "apiKey": "AIzaSyDzMn2-97STkm94Rex_4kyt0Vjj8wfGTOY",
+    "authDomain": "powerful-loader-298710.firebaseapp.com",
+    "databaseURL": "https://powerful-loader-298710-default-rtdb.firebaseio.com/",
+    "storageBucket": "powerful-loader-298710.appspot.com",
+      };
+      firebase.initializeApp(config);
+    var database = firebase.database();
+ var chartColors = {
+	red: 'rgb(23,24,24)',
+	orange: 'rgb(33,33,33)',
+	yellow: 'rgb(255, 205, 86)',
+	green: 'rgb(75, 192, 192)',
+	blue: 'rgb(54, 162, 235)',
+	purple: 'rgb(153, 102, 255)',
+	grey: 'rgb(15,16,16)',
+     black:'rgb(15,16,16)'
+};
+
+var i=0
+function randomScalingFactor() {
+    var ref = firebase.database().ref("cities/cities");
+         ref.once('value').then(function (snapshot) {
+             v = (snapshot.val())
+             c1=v['cp']
+             c2=v['altitude']
+             c3=v['lum']
+
+
+         });
+
+      return([c1, c2, c3]);
+
+}
+
+function onRefresh1(chart) {
+	chart.config.data.datasets.forEach(function(dataset) {
+		dataset.data.push({
+			x: Date.now(),
+			y: (randomScalingFactor()[0])
+		});
+	});
+}
+function onRefresh2(chart) {
+	chart.config.data.datasets.forEach(function(dataset) {
+		dataset.data.push({
+			x: Date.now(),
+			y: (randomScalingFactor()[1])
+		});
+	});
+}
+function onRefresh3(chart) {
+	chart.config.data.datasets.forEach(function(dataset) {
+		dataset.data.push({
+			x: Date.now(),
+			y: (randomScalingFactor()[2])
+		});
+	});
+}
+
+var color = Chart.helpers.color;
+var config1 = {
+	type: 'line',
+	data: {
+		datasets: [{
+			label: 'Dataset 1 (linear interpolation)',
+			backgroundColor: color(chartColors.black).alpha(0.5).rgbString(),
+			borderColor: chartColors.red,
+			fill: false,
+			lineTension: 0,
+			borderDash: [8, 4],
+			data: []
+
+		}]
+	},
+
+	options: {
+		title: {
+			display: true,
+			text: 'Line chart (hotizontal scroll) sample'
+		},
+         chartArea: {
+        backgroundColor: 'rgba(251, 85, 85, 0.4)'
+    },
+		scales: {
+			xAxes: [{
+				type: 'realtime',
+				realtime: {
+					duration: 20000,
+					refresh: 4000,
+					delay: 2000,
+					onRefresh: onRefresh1
+				}
+			}],
+			yAxes: [{
+				scaleLabel: {
+					display: true,
+					labelString: 'value'
+				}
+			}]
+		},
+		tooltips: {
+			mode: 'nearest',
+			intersect: false
+		},
+		hover: {
+			mode: 'nearest',
+			intersect: false
+		}
+	}
+};
+var config2 = {
+	type: 'line',
+	data: {
+		datasets: [{
+			label: 'Dataset 1 (linear interpolation)',
+			backgroundColor: color(chartColors.black).alpha(0.5).rgbString(),
+			borderColor: chartColors.red,
+			fill: false,
+			lineTension: 0,
+			borderDash: [8, 4],
+			data: []
+
+		}]
+	},
+
+	options: {
+		title: {
+			display: true,
+			text: 'Line chart (hotizontal scroll) sample'
+		},
+         chartArea: {
+        backgroundColor: 'rgba(251, 85, 85, 0.4)'
+    },
+		scales: {
+			xAxes: [{
+				type: 'realtime',
+				realtime: {
+					duration: 20000,
+					refresh: 4000,
+					delay: 2000,
+					onRefresh: onRefresh2
+				}
+			}],
+			yAxes: [{
+				scaleLabel: {
+					display: true,
+					labelString: 'value'
+				}
+			}]
+		},
+		tooltips: {
+			mode: 'nearest',
+			intersect: false
+		},
+		hover: {
+			mode: 'nearest',
+			intersect: false
+		}
+	}
+};
+var config3 = {
+	type: 'line',
+	data: {
+		datasets: [{
+			label: 'Dataset 1 (linear interpolation)',
+			backgroundColor: color(chartColors.black).alpha(0.5).rgbString(),
+			borderColor: chartColors.red,
+			fill: false,
+			lineTension: 0,
+			borderDash: [8, 4],
+			data: []
+
+		}]
+	},
+
+	options: {
+		title: {
+			display: true,
+			text: 'Line chart (hotizontal scroll) sample'
+		},
+         chartArea: {
+        backgroundColor: 'rgba(251, 85, 85, 0.4)'
+    },
+		scales: {
+			xAxes: [{
+				type: 'realtime',
+				realtime: {
+					duration: 20000,
+					refresh: 4000,
+					delay: 2000,
+					onRefresh: onRefresh3
+				}
+			}],
+			yAxes: [{
+				scaleLabel: {
+					display: true,
+					labelString: 'value'
+				}
+			}]
+		},
+		tooltips: {
+			mode: 'nearest',
+			intersect: false
+		},
+		hover: {
+			mode: 'nearest',
+			intersect: false
+		}
+	}
+};
+
+window.onload = function() {
+	var ctx1 = document.getElementById('selmi1').getContext('2d');
+	var ctx2 = document.getElementById('selmi2').getContext('2d');
+	var ctx3 = document.getElementById('selmi3').getContext('2d');
+
+	window.myChart = new Chart(ctx1, config1);
+	window.myChart = new Chart(ctx2, config2);
+	window.myChart = new Chart(ctx3, config3);
+};
+</script>
+
+</body>
+</html>

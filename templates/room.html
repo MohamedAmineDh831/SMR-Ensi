@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% from "macros.html" import  room %}
+{% block content %}
+
+      <div class="content">
+
+        <div class="row">
+
+          <div class="col-md-12">
+{% for val in L %}
+            <div class="card">
+              <div class="card-header">
+                <h5 class="title">{{ val.Adresse }}</h5>
+                <p class="category">Capacity : {{ val.Capacite }}</p>
+              </div>
+              <div class="card-body all-icons">
+                  <div class="container-fluid">
+                <div class="row">
+
+                      {{ room( val.Nomsalle, val.img_path ) }}
+
+                        {{ val.Description}}
+                    <div class="card-footer">
+                        <form method="POST" action="{{ url_for('room') }}">
+                    <button  value="Room{{loop.index}}" name="Room" type="submit" class="btn btn-fill btn-primary" >Save</button>
+                        </form>
+                  </div>
+
+                </div>
+                  </div>
+              </div>
+            </div>
+{% endfor %}
+          </div>
+
+        </div>
+
+      </div>
+{% endblock %}

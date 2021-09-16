@@ -1,0 +1,76 @@
+
+{% macro nav_link(endpoint, text, class,active) %}
+    <li {% if active %}class="active" {% endif %}>
+    {% if endpoint == "user_register" %}
+        <a href="{{ url_for(endpoint,idp = 4) }}">
+            <i class="{{ class }}"></i>
+            <p>{{ text }}</p>
+        </a>
+    {% endif %}
+    {% if endpoint != "user_register" %}
+        <a href="{{ url_for(endpoint) }}">
+            <i class="{{ class }}"></i>
+            <p>{{ text }}</p>
+        </a>
+    {% endif %}
+    </li>
+{% endmacro %}
+
+{% macro notif(endpoint, text) %}
+    <li class="nav-link">
+        <a href="{{ url_for(endpoint) }}" class="nav-item dropdown-item">
+            {{ text }}
+        </a>
+    </li>
+{% endmacro %}
+
+{% macro profil(endpoint, text) %}
+    <li class="nav-link">
+        <a href="{{ url_for(endpoint)}}" class="nav-item dropdown-item">
+            {{ text }}
+        </a>
+    </li>
+{% endmacro %}
+
+{% macro footer(endpoint, text) %}
+     <li class="nav-item">
+         <a href="{{ url_for(endpoint)}}" class="nav-link">
+             {{ text}}
+         </a>
+     </li>
+{% endmacro %}
+
+{% macro render_field(field) %}
+<div class="form-group">
+    <label for="{{ field.name }}" >{{ field.label.text }}</label>
+        {{ field(class_='form-control', **kwargs)|safe }}
+        <ul>
+        {% for error in field.errors %}
+            <li style="color:white;">{{ error }}</li>
+        {% endfor %}
+        </ul>
+</div>
+{% endmacro %}
+{% macro room(nom,path) %}
+      <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6" >
+          <div class="font-icon-detail">
+                      <img src="static/imgRoom/{{ path }} ">
+                      <p>{{ nom }}</p>
+                    </div>
+      </div>
+
+{% endmacro %}
+{% macro table(Feature,Value) %}
+
+                      <tr>
+                        <th>
+                          {{ Feature }}
+                        </th>
+                        <th>
+                          {{ Value }}
+                        </th>
+
+                      </tr>
+
+
+{% endmacro %}

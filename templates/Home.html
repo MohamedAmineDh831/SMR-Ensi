@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="content">
+        <div class="row">
+         <div class="card ">
+              <div class="card-header">
+                <h1 class="card-title"> SMR-ENSI</h1>
+              </div>
+                   <div class="card-body">
+                <h4>If you work in an office you have probably attended a meeting or
+                    two the last couple of days</br> and if that’s the
+                    case, you have probably used a meeting room. Are we correct?
+                </h4>
+                </div>
+                   </div>
+            {% for i in range(0,taille) %}
+
+                <div class="col-md-4" >
+            <div class="card card-user">
+              <div class="card-body">
+                <p class="card-text">
+                  <div class="author">
+                    <div class="block block-one"></div>
+                    <div class="block block-two"></div>
+                    <div class="block block-three"></div>
+                    <div class="block block-four"></div>
+                    <a href="javascript:void(0)">
+                      <img class="avatar" src="../static/imgUser/{{ UserId[i] }}.jpg" alt="...">
+                      <h5 class="title">{{ L[i].NomFormateur }}</h5>
+                    </a>
+                    <p class="description">
+                      {{ L[i].nom }}
+                    </p>
+                  </div>
+                </p>
+                <div class="card-description">
+                  {{ L[i].Description }}
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="button-container">
+                    <form method="POST" action="{{ url_for('Home') }}">
+                  <button value="reunion{{loop.index}}" name="Reunion" type="submit" class="btn btn-icon btn-round btn-facebook">
+                      <i>GO</i>
+                  </button>
+                        </form>
+                </div>
+              </div>
+            </div>
+          </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+  {% endblock %}

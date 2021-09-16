@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% from "macros.html" import  render_field %}
+{% block content %}
+          <div class="content">
+        <div class="row">
+ <!-------------------------------------------------------------------------------------------------------------!>
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="title">Edit Profile</h5>
+              </div>
+              <div class="card-body">
+                <form method="POST" action="{{ url_for('user_register',idp=4) }}">
+                    {{ form.csrf_token }}
+                  <div class="row">
+                    <div class="col-md-5 pr-md-1">
+                        {{ render_field(form.email, placeholder = form.email.label.text) }}
+
+                    </div>
+                    <div class="col-md-3 px-md-1">
+                      {{ render_field(form.username, placeholder = form.username.label.text) }}
+                    </div>
+                    <div class="col-md-4 pl-md-1">
+                      {{ render_field(form.password, placeholder = form.password.label.text) }}
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6 pr-md-1">
+                    {{ render_field(form.first_name, placeholder = form.first_name.label.text) }}
+                    </div>
+                    <div class="col-md-6 pl-md-1">
+                      {{ render_field(form.last_name, placeholder = form.last_name.label.text) }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      {{ render_field(form.Tel, placeholder = form.Tel.label.text) }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                      {{ render_field(form.about_me, placeholder = form.about_me.label.text) }}
+                    </div>
+                  </div>
+
+                  </div>
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-fill btn-primary" >Save</button>
+                  </div>
+                </form>
+            </div>
+          </div>
+   <!---------------------------------------------------------------------------------------------------------------!>
+  <!-----------------------------------------------------------------------------------------------------------------!>
+
+  <!-----------------------------------------------------------------------------------------------!>
+        </div>
+  <!--""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""--!>
+      </div>
+
+{% endblock %}
